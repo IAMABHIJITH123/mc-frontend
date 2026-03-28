@@ -2,7 +2,7 @@
  * Generic API Client for consistent fetching and error handling
  */
 
-const BASE_URL = 'http://se-mlm-01.velrix.net:4819';
+const BASE_URL = 'https://se-mlm-01.velrix.net:4819';
 
 export async function apiFetch<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
