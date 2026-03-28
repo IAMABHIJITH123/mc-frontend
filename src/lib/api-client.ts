@@ -1,24 +1,13 @@
-/**
- * Generic API Client for consistent fetching and error handling
- */
+const BASE_URL = 'https://api.allorigins.win/raw?url=http://se-mlm-01.velrix.net:4819';
 
-const BASE_URL = 'https://api.allorigins.win/raw?url=http://se-mlm-01.velrix.net:4819/api/stats';
-
-export async function apiFetch<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+export async function apiFetch(endpoint, options = {}) {
     const url = `${BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
     
     try {
-        const response = await fetch(url, {
-            ...options,
-            headers: {
-                'Content-Type': 'application/json',
-                ...options.headers,
-            },
-        });
+        const response = await fetch(url); // ✅ NO headers
 
         if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.message || `API Error: ${response.status} ${response.statusText}`);
+            throw new Error(`API Error: ${response.status}`);
         }
 
         return await response.json();
